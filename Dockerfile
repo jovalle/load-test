@@ -1,7 +1,14 @@
-FROM python:2.7-wheezy
+FROM python:3.10.5-bullseye
+
+# Install gcc for pip package compilation
+RUN apt-get install -y gcc
 
 # Install locust
-RUN pip install pyzmq locustio faker
+# RUN pip install psutil pyzmq locust faker
+RUN pip install locust
+
+# Cleanup after install
+RUN rm -rf /var/lib/apt/lists/*
 
 ADD locustfile.py /config/locustfile.py
 ADD runLocust.sh /usr/local/bin/runLocust.sh
